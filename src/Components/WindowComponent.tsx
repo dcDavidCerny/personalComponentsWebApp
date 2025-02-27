@@ -31,7 +31,7 @@ export const WindowComponent = ({
   const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false);
 
   const handleMouseDown = useCallback(
-    (e: MouseEvent) => {
+    (e: React.MouseEvent) => {
       setIsDraggingOrResizing(true);
       const startX = e.clientX;
       const startY = e.clientY;
@@ -54,26 +54,6 @@ export const WindowComponent = ({
     },
     [position]
   );
-
-  useEffect(() => {
-    const titleElement = document.querySelector(".windowTitle");
-
-    if (titleElement) {
-      titleElement.addEventListener(
-        "mousedown",
-        handleMouseDown as EventListener
-      );
-    }
-
-    return () => {
-      if (titleElement) {
-        titleElement.removeEventListener(
-          "mousedown",
-          handleMouseDown as EventListener
-        );
-      }
-    };
-  }, [handleMouseDown]);
 
   const handleResizeMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -122,26 +102,6 @@ export const WindowComponent = ({
     };
   }, [isDraggingOrResizing]);
 
-  useEffect(() => {
-    const titleElement = document.querySelector(".windowTitle");
-
-    if (titleElement) {
-      titleElement.addEventListener(
-        "mousedown",
-        handleMouseDown as EventListener
-      );
-    }
-
-    return () => {
-      if (titleElement) {
-        titleElement.removeEventListener(
-          "mousedown",
-          handleMouseDown as EventListener
-        );
-      }
-    };
-  }, [handleMouseDown]);
-
   return (
     <WindowComponentWrapper
       x={position.x}
@@ -149,7 +109,7 @@ export const WindowComponent = ({
       width={size.width}
       height={size.height}
     >
-      <div className="windowTitle">
+      <div className="windowTitle" onMouseDown={handleMouseDown}>
         <div className="titleSpanDiv">
           <span className="titleSpan">{title}</span>
         </div>
