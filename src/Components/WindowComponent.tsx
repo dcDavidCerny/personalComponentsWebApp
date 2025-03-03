@@ -9,6 +9,7 @@ export interface WindowProps {
   defaultMaxSize?: { width: number; height: number };
   closable?: boolean;
   onClose?: () => void;
+  resizable?: boolean;
   children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -21,6 +22,7 @@ export const WindowComponent = ({
   defaultMinSize = { width: 200, height: 150 },
   defaultMaxSize = { width: 1200, height: 1000 },
   closable = false,
+  resizable = true,
   onClose,
   children,
   className,
@@ -98,7 +100,7 @@ export const WindowComponent = ({
     }
 
     return () => {
-      document.body.style.userSelect = ""; // Clean up on component unmount
+      document.body.style.userSelect = "";
     };
   }, [isDraggingOrResizing]);
 
@@ -121,22 +123,26 @@ export const WindowComponent = ({
       </div>
       <div className="window-content">{children}</div>
 
-      <div
-        className="resizeHandleBottomRight"
-        onMouseDown={handleResizeMouseDown}
-      />
-      <div
-        className="resizeHandleBottomLeft"
-        onMouseDown={handleResizeMouseDown}
-      />
-      <div
-        className="resizeHandleTopRight"
-        onMouseDown={handleResizeMouseDown}
-      />
-      <div
-        className="resizeHandleTopLeft"
-        onMouseDown={handleResizeMouseDown}
-      />
+      {resizable && (
+        <>
+          <div
+            className="resizeHandleBottomRight"
+            onMouseDown={handleResizeMouseDown}
+          />
+          <div
+            className="resizeHandleBottomLeft"
+            onMouseDown={handleResizeMouseDown}
+          />
+          <div
+            className="resizeHandleTopRight"
+            onMouseDown={handleResizeMouseDown}
+          />
+          <div
+            className="resizeHandleTopLeft"
+            onMouseDown={handleResizeMouseDown}
+          />
+        </>
+      )}
     </WindowComponentWrapper>
   );
 };

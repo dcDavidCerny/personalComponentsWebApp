@@ -1,59 +1,46 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { WindowComponent } from "./Components/WindowComponent";
 import styled from "styled-components";
+import CalculatorComponent from "./Components/SubComponentsForDifferentWindows/CalculatorComponent/Calculator";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [superBtn, setSuperBtn] = useState(false);
-  const handleCloseOrOpen = () => {
-    setIsOpen(!isOpen);
+  const handleOpen = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+  };
+
+  const handleClose = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
   };
 
   useEffect(() => {
     console.log("isOpen", isOpen);
   }, [isOpen]);
 
-  {
-    /* handleSuperBtn */
-  }
-  const handleSuperBtn = () => {
-    setSuperBtn(!superBtn);
-  };
-  useEffect(() => {
-    if (superBtn) {
-      setTimeout(() => {
-        setIsOpen(!isOpen);
-      }, 100);
-    }
-  }, [isOpen, superBtn]);
-  {
-    /* handleSuperBtn */
-  }
-
   return (
     <>
       <AppWrapper>
-        <div onClick={handleCloseOrOpen} className="testClickableElementDiv">
-          HIiiiiiii
+        <div onClick={handleOpen} className="testClickableElementDiv">
+          Calculator
         </div>
-        {/* handleSuperBtn */}
-        <div onClick={handleSuperBtn} className="testClickableElementDiv">
-          SUPER BTN
-        </div>
-        {/* handleSuperBtn */}
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
           {isOpen && (
             <WindowComponent
-              title="Sample Window"
+              title="Calculator"
               defaultPosition={{ x: 500, y: 100 }}
-              defaultSize={{ width: 1000, height: 500 }}
+              defaultSize={{ width: 320, height: 537 }}
+              defaultMinSize={{ width: 320, height: 537 }}
+              defaultMaxSize={{ width: 320, height: 537 }}
               closable={true}
-              onClose={handleCloseOrOpen}
-              className="custom-window"
+              resizable={false}
+              onClose={handleClose}
+              className="calculatorWindow"
             >
-              <div style={{ padding: "1rem" }}>
-                <p>This is a sample window content.</p>
-              </div>
+              <CalculatorComponent />
             </WindowComponent>
           )}
         </div>
@@ -80,5 +67,10 @@ const AppWrapper = styled.div`
       align-items: center;
       font-size: 1rem;
     }
+  }
+
+  .calculatorWindow {
+    padding: 0;
+    margin: 0;
   }
 `;
