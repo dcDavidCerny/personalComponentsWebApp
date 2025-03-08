@@ -92,9 +92,9 @@ function App() {
             <WindowComponent
               title="Notes"
               defaultPosition={{ x: 500, y: 100 }}
-              defaultSize={{ width: 461, height: 403 }}
-              defaultMinSize={{ width: 465, height: 403 }}
-              defaultMaxSize={{ width: 461, height: 403 }}
+              defaultSize={{ width: 490, height: 403 }}
+              defaultMinSize={{ width: 490, height: 403 }}
+              defaultMaxSize={{ width: 490, height: 403 }}
               closable={true}
               resizable={false}
               onClose={handleNotesWindowClose}

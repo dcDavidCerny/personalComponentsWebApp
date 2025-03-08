@@ -22,6 +22,8 @@ export const NotesComponent: React.FC = () => {
 
   const [selectedNoteIndex, setSelectedNoteIndex] = useState<number>(0);
   const [scrollOffset, setScrollOffset] = useState<number>(0);
+  const [confirmingIndex, setConfirmingIndex] = useState<number | null>(null);
+
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
@@ -71,7 +73,10 @@ export const NotesComponent: React.FC = () => {
     e: React.MouseEvent<HTMLDivElement>
   ) => {
     e.preventDefault();
-    if (!window.confirm("Are you sure you want to delete this note?")) return;
+    setConfirmingIndex(noteIndex);
+  };
+
+  const confirmDelete = (noteIndex: number) => {
     setNotes((prevNotes) => {
       const newNotes = prevNotes.filter((_, i) => i !== noteIndex);
       if (selectedNoteIndex === noteIndex) {
@@ -86,6 +91,11 @@ export const NotesComponent: React.FC = () => {
       }
       return newNotes;
     });
+    setConfirmingIndex(null);
+  };
+
+  const cancelDelete = () => {
+    setConfirmingIndex(null);
   };
 
   const handleSelectNote = (noteIndex: number) => {
@@ -93,7 +103,6 @@ export const NotesComponent: React.FC = () => {
   };
 
   const leftHiddenCount = scrollOffset;
-
   const rightHiddenCount = Math.max(0, notes.length - (scrollOffset + 3));
 
   return (
@@ -121,15 +130,27 @@ export const NotesComponent: React.FC = () => {
             return (
               <div
                 key={note.id}
-                className={`noteElementBtn ${
-                  overallIndex === selectedNoteIndex
-                    ? "activeNoteElementBtn"
-                    : ""
-                }`}
-                onClick={() => handleSelectNote(overallIndex)}
-                onContextMenu={(e) => handleDeleteNote(overallIndex, e)}
+                style={{ position: "relative", display: "inline-block" }}
               >
-                {noteTitle}
+                <div
+                  className={`noteElementBtn ${
+                    overallIndex === selectedNoteIndex
+                      ? "activeNoteElementBtn"
+                      : ""
+                  }`}
+                  onClick={() => handleSelectNote(overallIndex)}
+                  onContextMenu={(e) => handleDeleteNote(overallIndex, e)}
+                >
+                  {noteTitle}
+                </div>
+                {confirmingIndex === overallIndex && (
+                  <div className="deleteTooltip">
+                    <button onClick={() => confirmDelete(overallIndex)}>
+                      Yes
+                    </button>
+                    <button onClick={cancelDelete}>No</button>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -184,6 +205,7 @@ const NotesComponentWrapper = styled.div`
   .noteElementBtn {
     cursor: pointer;
     width: 110px;
+    max-width: 110px;
     height: 45px;
     background-color: ${colors.secondaryBlue};
     border: 1px solid black;
@@ -272,10 +294,9 @@ const NotesComponentWrapper = styled.div`
 
   .notesTextArea {
     outline: none;
-    width: 453px;
+    width: 480px;
     height: 313px;
     resize: none;
-    /* background-color: #00747a; */
     background-color: ${colors.backgroundColorBlueDefault};
     color: #ffffff;
     font-size: 1rem;
@@ -284,5 +305,28 @@ const NotesComponentWrapper = styled.div`
   .notesTextArea::placeholder {
     color: #ffffff;
     font-size: 1rem;
+  }
+
+  .deleteTooltip {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 10;
+  }
+
+  .deleteTooltip button {
+    margin-left: 4px;
+    background: #555;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 50px;
   }
 `;
