@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { colors } from "../../../constantsColors";
 
 interface Note {
   id: string;
@@ -21,7 +22,6 @@ export const NotesComponent: React.FC = () => {
 
   const [selectedNoteIndex, setSelectedNoteIndex] = useState<number>(0);
   const [scrollOffset, setScrollOffset] = useState<number>(0);
-
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
@@ -113,7 +113,11 @@ export const NotesComponent: React.FC = () => {
           </div>
           {visibleNotes.map((note, idx) => {
             const overallIndex = scrollOffset + idx;
-            const noteTitle = note.text.split("\n")[0] || "Untitled";
+            const noteFirstLine = note.text.split("\n")[0] || "Untitled";
+            const noteTitle =
+              noteFirstLine.length > 12
+                ? noteFirstLine.substring(0, 12) + "..."
+                : noteFirstLine;
             return (
               <div
                 key={note.id}
@@ -181,15 +185,12 @@ const NotesComponentWrapper = styled.div`
     cursor: pointer;
     width: 110px;
     height: 45px;
-    background-color: #5299d3;
-    border: 1px solid #000000;
+    background-color: ${colors.secondaryBlue};
+    border: 1px solid black;
     border-radius: 5px;
     padding: 2px;
     margin: 1px;
-    font-size: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,11 +198,11 @@ const NotesComponentWrapper = styled.div`
   }
 
   .activeNoteElementBtn {
-    border-bottom: 1px solid lime;
+    border-bottom: 1px solid ${colors.successHover};
   }
 
   .noteElementBtn:hover {
-    background-color: #66a5d8;
+    background-color: ${colors.secondaryBlueHover};
   }
 
   .smallerBtn {
@@ -216,18 +217,19 @@ const NotesComponentWrapper = styled.div`
     justify-content: center;
     font-size: 1.5rem;
     border-radius: 10px;
-    background-color: #8d8d8d;
     margin: 1px;
     user-select: none;
   }
 
   .scrollBtn {
-    background-color: #208af3;
+    background-color: ${colors.primaryBlue};
     transition: 0.3s ease;
+    width: 42px;
+    min-width: 42px;
   }
 
   .scrollBtn:hover {
-    background-color: #0662bf;
+    background-color: ${colors.primaryBlueHover};
   }
 
   .hiddenCount {
@@ -249,12 +251,12 @@ const NotesComponentWrapper = styled.div`
   }
 
   .addNoteBtn {
-    background-color: #5ce65c;
+    background-color: ${colors.success};
     transition: 0.3s ease;
   }
 
   .addNoteBtn:hover {
-    background-color: #17db17;
+    background-color: ${colors.successHover};
   }
 
   .noNoteSelectedDiv {
@@ -273,7 +275,8 @@ const NotesComponentWrapper = styled.div`
     width: 453px;
     height: 313px;
     resize: none;
-    background-color: #00747a;
+    /* background-color: #00747a; */
+    background-color: ${colors.backgroundColorBlueDefault};
     color: #ffffff;
     font-size: 1rem;
   }

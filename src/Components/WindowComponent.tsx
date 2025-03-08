@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
+import { colors } from "../constantsColors";
 
 export interface WindowProps {
   title?: string;
@@ -158,15 +159,15 @@ const WindowComponentWrapper = styled.div<{
   top: ${({ y }) => y}px;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  background-color: #183763;
-  border: 3px solid #142e52;
+  background-color: ${colors.backgroundColorBlueDefault};
+  border: 3px solid ${colors.backgroundColorBlueDefault};
   color: white;
   font-size: 1rem;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
   .windowTitle {
-    background-color: #7a89c2;
+    background-color: ${colors.windowTitleColor};
     color: #fff;
     font-size: 1.2rem;
     display: flex;
@@ -178,7 +179,7 @@ const WindowComponentWrapper = styled.div<{
     }
 
     .closeBtn {
-      background-color: #448ef6;
+      background-color: ${colors.secondaryBlue};
       color: white;
       border: none;
       cursor: pointer;
@@ -186,7 +187,7 @@ const WindowComponentWrapper = styled.div<{
       transition: background-color 0.33s;
 
       &:hover {
-        background-color: #ff4d4d;
+        background-color: ${colors.lightDanger};
       }
     }
   }

@@ -4,10 +4,12 @@ import styled from "styled-components";
 import CalculatorComponent from "./Components/SubComponentsForDifferentWindows/CalculatorComponent/Calculator";
 import { NotesComponent } from "./Components/SubComponentsForDifferentWindows/NotesComponent/Notes";
 import "./App.css";
+import { TimerComponent } from "./Components/SubComponentsForDifferentWindows/TimerComponent/Timer";
 
 function App() {
   const [isCalculatorWindowOpen, setIsCalculatorWindowOpen] = useState(false);
   const [isNotesWindowOpen, setIsNotesWindowOpen] = useState(false);
+  const [isTimerWindowOpen, setIsTimerWindowOpen] = useState(false);
   const handleCalculatorWindowOpen = () => {
     if (!isCalculatorWindowOpen) {
       setIsCalculatorWindowOpen(true);
@@ -20,6 +22,12 @@ function App() {
     }
   };
 
+  const handleTimerWindowOpen = () => {
+    if (!isTimerWindowOpen) {
+      setIsTimerWindowOpen(true);
+    }
+  };
+
   const handleCalculatorWindowClose = () => {
     if (isCalculatorWindowOpen) {
       setIsCalculatorWindowOpen(false);
@@ -29,6 +37,12 @@ function App() {
   const handleNotesWindowClose = () => {
     if (isNotesWindowOpen) {
       setIsNotesWindowOpen(false);
+    }
+  };
+
+  const handleTimerWindowClose = () => {
+    if (isTimerWindowOpen) {
+      setIsTimerWindowOpen(false);
     }
   };
 
@@ -50,6 +64,12 @@ function App() {
           className="testClickableElementDiv"
         >
           Notes
+        </div>
+        <div
+          onClick={handleTimerWindowOpen}
+          className="testClickableElementDiv"
+        >
+          Timer
         </div>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
           {isCalculatorWindowOpen && (
@@ -76,11 +96,27 @@ function App() {
               defaultMinSize={{ width: 465, height: 403 }}
               defaultMaxSize={{ width: 461, height: 403 }}
               closable={true}
-              resizable={true}
+              resizable={false}
               onClose={handleNotesWindowClose}
               className="calculatorWindow"
             >
               <NotesComponent />
+            </WindowComponent>
+          )}
+
+          {isTimerWindowOpen && (
+            <WindowComponent
+              title="Timer"
+              defaultPosition={{ x: 500, y: 100 }}
+              defaultSize={{ width: 461, height: 403 }}
+              defaultMinSize={{ width: 465, height: 403 }}
+              defaultMaxSize={{ width: 461, height: 403 }}
+              closable={true}
+              resizable={false}
+              onClose={handleTimerWindowClose}
+              className="TimerWindow"
+            >
+              <TimerComponent />
             </WindowComponent>
           )}
         </div>
@@ -98,7 +134,7 @@ const AppWrapper = styled.div`
     background-color: #08415c;
     border: 1px solid #ccc929;
     color: white;
-    border-radius: 3px;
+    border-radius: 7px;
     width: 100px;
     transition: 0.5s ease;
     cursor: pointer;

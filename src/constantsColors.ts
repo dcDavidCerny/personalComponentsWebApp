@@ -1,0 +1,16 @@
+export const colors = {
+    primaryBlue: "#208af3",
+    primaryBlueHover: "#0662bf",
+    secondaryBlue: "#5299d3",
+    secondaryBlueHover: "#66a5d8",
+    treeColor: "#11872b",
+    treeColorHover: "#18ae38",
+    success: "#5ce65c",
+    successHover: "#29f029",
+    warning: "#ffb74d",
+    warningHover: "#ff9a05",
+    lightDanger: "#ff4d4d",
+    danger: "#cf1111",
+    windowTitleColor: "#7a89c2",
+    backgroundColorBlueDefault: "#183763",
+}
