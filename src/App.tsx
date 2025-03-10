@@ -102,7 +102,6 @@ function App() {
             closable={true}
             resizable={false}
             onClose={handleCalculatorWindowClose}
-            className="calculatorWindow"
           >
             <CalculatorComponent />
           </WindowComponent>
@@ -118,7 +117,6 @@ function App() {
             closable={true}
             resizable={false}
             onClose={handleNotesWindowClose}
-            className="calculatorWindow"
           >
             <NotesComponent />
           </WindowComponent>
@@ -134,7 +132,6 @@ function App() {
             closable={true}
             resizable={false}
             onClose={handleTimerWindowClose}
-            className="TimerWindow"
           >
             <TimerComponent />
           </WindowComponent>
@@ -149,7 +146,6 @@ function App() {
             closable={true}
             resizable={false}
             onClose={handleTranslatorWindowClose}
-            className="TranslatorWindow"
           >
             <TranslatorComponent />
           </WindowComponent>

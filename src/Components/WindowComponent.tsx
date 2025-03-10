@@ -111,6 +111,8 @@ export const WindowComponent = ({
       y={position.y}
       width={size.width}
       height={size.height}
+      className={className}
+      style={style}
     >
       <div className="windowTitle" onMouseDown={handleMouseDown}>
         <div className="titleSpanDiv">
