@@ -5,11 +5,13 @@ import CalculatorComponent from "./Components/SubComponentsForDifferentWindows/C
 import { NotesComponent } from "./Components/SubComponentsForDifferentWindows/NotesComponent/Notes";
 import "./App.css";
 import { TimerComponent } from "./Components/SubComponentsForDifferentWindows/TimerComponent/Timer";
+import { TranslatorComponent } from "./Components/SubComponentsForDifferentWindows/TranslatorComponent/Translator";
 
 function App() {
   const [isCalculatorWindowOpen, setIsCalculatorWindowOpen] = useState(false);
   const [isNotesWindowOpen, setIsNotesWindowOpen] = useState(false);
   const [isTimerWindowOpen, setIsTimerWindowOpen] = useState(false);
+  const [isTranslatorWindowOpen, setIsTranslatorWindowOpen] = useState(false);
   const handleCalculatorWindowOpen = () => {
     if (!isCalculatorWindowOpen) {
       setIsCalculatorWindowOpen(true);
@@ -28,6 +30,12 @@ function App() {
     }
   };
 
+  const handleTranslatorWindowOpen = () => {
+    if (!isTranslatorWindowOpen) {
+      setIsTranslatorWindowOpen(true);
+    }
+  };
+
   const handleCalculatorWindowClose = () => {
     if (isCalculatorWindowOpen) {
       setIsCalculatorWindowOpen(false);
@@ -43,6 +51,12 @@ function App() {
   const handleTimerWindowClose = () => {
     if (isTimerWindowOpen) {
       setIsTimerWindowOpen(false);
+    }
+  };
+
+  const handleTranslatorWindowClose = () => {
+    if (isTranslatorWindowOpen) {
+      setIsTranslatorWindowOpen(false);
     }
   };
 
@@ -71,55 +85,75 @@ function App() {
         >
           Timer
         </div>
-        <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-          {isCalculatorWindowOpen && (
-            <WindowComponent
-              title="Calculator"
-              defaultPosition={{ x: 500, y: 100 }}
-              defaultSize={{ width: 320, height: 537 }}
-              defaultMinSize={{ width: 320, height: 537 }}
-              defaultMaxSize={{ width: 320, height: 537 }}
-              closable={true}
-              resizable={false}
-              onClose={handleCalculatorWindowClose}
-              className="calculatorWindow"
-            >
-              <CalculatorComponent />
-            </WindowComponent>
-          )}
-
-          {isNotesWindowOpen && (
-            <WindowComponent
-              title="Notes"
-              defaultPosition={{ x: 500, y: 100 }}
-              defaultSize={{ width: 490, height: 403 }}
-              defaultMinSize={{ width: 490, height: 403 }}
-              defaultMaxSize={{ width: 490, height: 403 }}
-              closable={true}
-              resizable={false}
-              onClose={handleNotesWindowClose}
-              className="calculatorWindow"
-            >
-              <NotesComponent />
-            </WindowComponent>
-          )}
-
-          {isTimerWindowOpen && (
-            <WindowComponent
-              title="Timer"
-              defaultPosition={{ x: 500, y: 100 }}
-              defaultSize={{ width: 461, height: 403 }}
-              defaultMinSize={{ width: 465, height: 403 }}
-              defaultMaxSize={{ width: 461, height: 403 }}
-              closable={true}
-              resizable={false}
-              onClose={handleTimerWindowClose}
-              className="TimerWindow"
-            >
-              <TimerComponent />
-            </WindowComponent>
-          )}
+        <div
+          onClick={handleTranslatorWindowOpen}
+          className="testClickableElementDiv"
+        >
+          Translator
         </div>
+
+        {isCalculatorWindowOpen && (
+          <WindowComponent
+            title="Calculator"
+            defaultPosition={{ x: 500, y: 100 }}
+            defaultSize={{ width: 320, height: 537 }}
+            defaultMinSize={{ width: 320, height: 537 }}
+            defaultMaxSize={{ width: 320, height: 537 }}
+            closable={true}
+            resizable={false}
+            onClose={handleCalculatorWindowClose}
+            className="calculatorWindow"
+          >
+            <CalculatorComponent />
+          </WindowComponent>
+        )}
+
+        {isNotesWindowOpen && (
+          <WindowComponent
+            title="Notes"
+            defaultPosition={{ x: 500, y: 100 }}
+            defaultSize={{ width: 490, height: 403 }}
+            defaultMinSize={{ width: 490, height: 403 }}
+            defaultMaxSize={{ width: 490, height: 403 }}
+            closable={true}
+            resizable={false}
+            onClose={handleNotesWindowClose}
+            className="calculatorWindow"
+          >
+            <NotesComponent />
+          </WindowComponent>
+        )}
+
+        {isTimerWindowOpen && (
+          <WindowComponent
+            title="Timer"
+            defaultPosition={{ x: 500, y: 100 }}
+            defaultSize={{ width: 461, height: 403 }}
+            defaultMinSize={{ width: 465, height: 403 }}
+            defaultMaxSize={{ width: 461, height: 403 }}
+            closable={true}
+            resizable={false}
+            onClose={handleTimerWindowClose}
+            className="TimerWindow"
+          >
+            <TimerComponent />
+          </WindowComponent>
+        )}
+        {isTranslatorWindowOpen && (
+          <WindowComponent
+            title="Translator"
+            defaultPosition={{ x: 500, y: 100 }}
+            defaultSize={{ width: 950, height: 500 }}
+            defaultMinSize={{ width: 950, height: 500 }}
+            defaultMaxSize={{ width: 950, height: 500 }}
+            closable={true}
+            resizable={false}
+            onClose={handleTranslatorWindowClose}
+            className="TranslatorWindow"
+          >
+            <TranslatorComponent />
+          </WindowComponent>
+        )}
       </AppWrapper>
     </>
   );
@@ -129,6 +163,7 @@ export default App;
 
 const AppWrapper = styled.div`
   overflow-x: hidden;
+  height: 100vh;
   .testClickableElementDiv {
     padding: 0.5rem;
     background-color: #08415c;

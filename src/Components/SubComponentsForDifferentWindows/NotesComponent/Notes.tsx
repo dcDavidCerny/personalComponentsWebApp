@@ -52,6 +52,7 @@ export const NotesComponent: React.FC = () => {
       const updatedNotes = [newNote, ...prevNotes];
       // LOL, I was looking for some answer how to set selectedNote after creating new note -- It was so damn ezzy
       setSelectedNoteIndex(0);
+      setScrollOffset(0);
       return updatedNotes;
     });
   };
@@ -146,9 +147,9 @@ export const NotesComponent: React.FC = () => {
                 {confirmingIndex === overallIndex && (
                   <div className="deleteTooltip">
                     <button onClick={() => confirmDelete(overallIndex)}>
-                      Yes
+                      Delete
                     </button>
-                    <button onClick={cancelDelete}>No</button>
+                    <button onClick={cancelDelete}>Cancel</button>
                   </div>
                 )}
               </div>
@@ -316,6 +317,7 @@ const NotesComponentWrapper = styled.div`
     border-radius: 4px;
     font-size: 12px;
     z-index: 10;
+    width: fit-content;
   }
 
   .deleteTooltip button {
@@ -327,6 +329,6 @@ const NotesComponentWrapper = styled.div`
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
-    width: 50px;
+    width: 100%;
   }
 `;

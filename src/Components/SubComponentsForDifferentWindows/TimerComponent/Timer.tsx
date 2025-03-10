@@ -27,13 +27,21 @@ export const TimerComponent: React.FC = () => {
     { id: "1", time: 0, title: "Stopwatch 1", isRunning: false },
   ]);
 
+  const [confirmingIndex, setConfirmingIndex] = useState<number | null>(null);
+
   useEffect(() => {
     const intervals = timers.map((timer) => {
       if (timer.isRunning && timer.time > 0) {
         return setInterval(() => {
           setTimers((prev) =>
             prev.map((t) =>
-              t.id === timer.id ? { ...t, time: Math.max(t.time - 1, 0) } : t
+              t.id === timer.id
+                ? {
+                    ...t,
+                    time: Math.max(t.time - 1, 0),
+                    isRunning: t.time === 1 ? false : t.isRunning,
+                  }
+                : t
             )
           );
         }, 1000);
@@ -86,7 +94,12 @@ export const TimerComponent: React.FC = () => {
   const toggleTimer = (id: string) => {
     setTimers((prev) =>
       prev.map((timer) =>
-        timer.id === id ? { ...timer, isRunning: !timer.isRunning } : timer
+        timer.id === id
+          ? {
+              ...timer,
+              isRunning: timer.time > 0 ? !timer.isRunning : timer.isRunning,
+            }
+          : timer
       )
     );
   };
@@ -137,6 +150,34 @@ export const TimerComponent: React.FC = () => {
     ]);
   };
 
+  const deleteTimer = (id: string) => {
+    setTimers((prev) => prev.filter((timer) => timer.id !== id));
+  };
+
+  const deleteStopwatch = (id: string) => {
+    setStopwatches((prev) => prev.filter((sw) => sw.id !== id));
+  };
+
+  const showDeleteTooltip = (index: number) => {
+    setConfirmingIndex(index);
+  };
+
+  const hideDeleteTooltip = () => {
+    setConfirmingIndex(null);
+  };
+
+  const confirmDeleteTimer = (index: number) => {
+    deleteTimer(timers[index].id);
+    hideDeleteTooltip();
+    setConfirmingIndex(null);
+  };
+
+  const confirmDeleteStopWatch = (index: number) => {
+    deleteStopwatch(stopwatches[index].id);
+    hideDeleteTooltip();
+    setConfirmingIndex(null);
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -156,19 +197,11 @@ export const TimerComponent: React.FC = () => {
 
       {view === "timer" && (
         <div className="contentDiv">
-          {timers.map((timer) => (
+          {timers.map((timer, index) => (
             <div key={timer.id} className="timerSection">
               <input
                 type="text"
-                className={
-                  timer.time > 0 && timer.time > 120
-                    ? "titleInput"
-                    : timer.time > 0 && timer.time <= 120 && timer.time > 60
-                    ? "titleInput titleInputWarning"
-                    : timer.time > 0 && timer.time <= 60
-                    ? "titleInput titleInputDanger"
-                    : "titleInput"
-                }
+                className="titleInput"
                 value={timer.title}
                 onChange={(e) =>
                   handleTimerTitleChange(timer.id, e.target.value)
@@ -180,7 +213,43 @@ export const TimerComponent: React.FC = () => {
                   if (e.key === "Enter") e.currentTarget.blur();
                 }}
               />
-              <h2 className="timerDisplay">{formatTime(timer.time)}</h2>
+              <button
+                className="deleteBtn"
+                onClick={() => showDeleteTooltip(index)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="red"
+                  className="trash"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                </svg>
+              </button>
+              {confirmingIndex === index && (
+                <div className="deleteTooltip">
+                  <button onClick={() => confirmDeleteTimer(index)}>
+                    Delete
+                  </button>
+                  <button onClick={hideDeleteTooltip}>Cancel</button>
+                </div>
+              )}
+              <h2
+                className={
+                  timer.time > 0 && timer.time > 120
+                    ? "timerDisplay"
+                    : timer.time > 0 && timer.time <= 120 && timer.time > 60
+                    ? "timerDisplay timerDisplayWarning"
+                    : timer.time > 0 && timer.time <= 60
+                    ? "timerDisplay timerDisplayDanger"
+                    : "timerDisplay"
+                }
+              >
+                {formatTime(timer.time)}
+              </h2>
               <button
                 className={timer.isRunning ? "timerStopBtn" : "timerStartBtn"}
                 onClick={() => toggleTimer(timer.id)}
@@ -243,7 +312,7 @@ export const TimerComponent: React.FC = () => {
 
       {view === "stopwatch" && (
         <div className="contentDiv">
-          {stopwatches.map((sw) => (
+          {stopwatches.map((sw, index) => (
             <div key={sw.id} className="stopwatchSection">
               <input
                 type="text"
@@ -259,6 +328,30 @@ export const TimerComponent: React.FC = () => {
                   if (e.key === "Enter") e.currentTarget.blur();
                 }}
               />
+              <button
+                className="deleteBtn"
+                onClick={() => showDeleteTooltip(index)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="red"
+                  className="trash"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                </svg>
+              </button>
+              {confirmingIndex === index && (
+                <div className="deleteTooltip">
+                  <button onClick={() => confirmDeleteStopWatch(index)}>
+                    Delete
+                  </button>
+                  <button onClick={hideDeleteTooltip}>Cancel</button>
+                </div>
+              )}
               <h2 className="stopwatchDisplay">{formatTime(sw.time)}</h2>
               <button
                 className={
@@ -331,6 +424,7 @@ const TimerComponentWrapper = styled.div`
     font-weight: bold;
     width: 200px;
     color: ${colors.success};
+    margin-left: 20px;
   }
 
   .titleInputWarning {
@@ -341,11 +435,48 @@ const TimerComponentWrapper = styled.div`
     color: ${colors.lightDanger};
   }
 
+  .deleteBtn {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .deleteTooltip {
+    position: absolute;
+    left: 75%;
+    transform: translateX(-50%);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 10;
+    width: fit-content;
+  }
+
+  .deleteTooltip button {
+    margin-left: 4px;
+    background: #555;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+  }
+
   .timerDisplay,
   .stopwatchDisplay {
     font-size: 40px;
     font-weight: bold;
     margin: 5px 0;
+  }
+
+  .timerDisplayWarning {
+    color: ${colors.warning};
+  }
+
+  .timerDisplayDanger {
+    color: ${colors.lightDanger};
   }
 
   .timerControls {
