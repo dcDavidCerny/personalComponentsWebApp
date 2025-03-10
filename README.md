@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# 🧑🏻 Personal Website-App  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my Personal Web-App. This project is a showcase of my coding journey, featuring different components built using **JavaScript**, **TypeScript**, **React**, and various libraries. It started as a portfolio project but turned into a funny and mostly usefull project, that I intend to update and mostly use.  
 
-Currently, two official plugins are available:
+## 🚀 Try it Out!  
+[Personal Web-App](https://dcdavidcerny.github.io/personalComponentsWebApp/)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🕹️ List of Components:  
 
-## Expanding the ESLint configuration
+#### 📱 Calculator!  
+- *A simple and intuitive calculator for performing basic arithmetic operations.*  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#### 📝 Notes!  
+- *Quickly jot down and organize your thoughts with a minimalistic notes app.*  
 
-- Configure the top-level `parserOptions` property like this:
+#### ⏲️ Timer!  
+- *Write, save, and access your notes with ease whenever you need them.*  
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+#### 🌍 Translator!  
+- *Effortlessly translate text across various languages with accurary.*  
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## ✨ Features  
+- **Interactive Design:** Simple, but efficient components on one single page. 
+  No need of searching for "online timer"; "online notes"; "Etc..." every time you need to set a few minutes timer or just to save a "npm create vite@latest" or smth 😅
+- **Tech Stack:**  
+  - **JavaScript**, **TypeScript**  
+  - **React**  
+  - **CSS** for styling  
+  - Additional libraries for functionality and design enhancements  
+  - **OpenAPI** by deepl for better translation in translator component
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 💡 About the Project  
+This project serves as a part of my **portfolio**, it is my personal web app, designed with interactive components that I actively use. It showcases my skills in coding, UI/UX design, and problem-solving while creating a smooth and functional user experience.
+
+
+## 🛠️ Future Plans  
+ I plan to expand the app by adding new components and enhancing existing ones with more features, improved functionality and better styling/layouting.
+
+---  
+
+Thank you for checking out my project. Feedback is always welcome—let me know what you think, does this project save you some time? Would it save you some time with different components? Let me know!  
