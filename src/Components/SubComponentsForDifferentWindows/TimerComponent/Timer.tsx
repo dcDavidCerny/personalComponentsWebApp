@@ -50,7 +50,8 @@ export const TimerComponent: React.FC = () => {
     });
     return () => {
       intervals.forEach(
-        (interval) => interval && clearInterval(interval as number)
+        (interval) =>
+          interval && clearInterval(interval as ReturnType<typeof setInterval>)
       );
     };
   }, [timers]);
@@ -68,7 +69,8 @@ export const TimerComponent: React.FC = () => {
     });
     return () => {
       intervals.forEach(
-        (interval) => interval && clearInterval(interval as number)
+        (interval) =>
+          interval && clearInterval(interval as ReturnType<typeof setInterval>)
       );
     };
   }, [stopwatches]);
