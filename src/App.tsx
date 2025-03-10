@@ -170,6 +170,7 @@ const AppWrapper = styled.div`
     transition: 0.5s ease;
     cursor: pointer;
     margin-top: 10px;
+    /* transition: border 5s ease; */
 
     .testClickableElementSpan {
       cursor: pointer;
